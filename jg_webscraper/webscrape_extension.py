@@ -1,38 +1,20 @@
-from bs4 import BeautifulSoup
-import requests 
-
 class AddJobToList:
-    def __init__(self, jobs):
+    def __init__(self, jobs, base_url):
         self.jobs = jobs
+        self.base_url = base_url 
 
     def getJobList(self):
-        print(type(self.jobs))
-        print(self.jobs[0])
         self.job_list = []
-        for job in self.jobs:
-            job_dict = {
-                'job_title' : (job.header.h2.a).get('title')
-            }
-            self.job_list.append(job_dict)
-        return self.job_list
-
-url = "https://www.reed.co.uk/jobs/Data-Scientist"
-
-response = requests.get(url) 
-
-# parse html content
-soup = BeautifulSoup(response.text, 'html.parser')
-
-# gets a set of all job cards
-cards = soup.find_all('div', 'col-sm-12 col-md-7 col-lg-8 col-xl-9')
-
-obj = AddJobToList(cards)
-
-job_titles = obj.getJobList()
-
-print(job_titles)
-
-del obj
-del job_titles
-
-print(job_titles)
+        try:
+            for job in self.jobs:
+                job_dict = {
+                    'job_title' : (job.header.h2.a).get('title'),
+                    'job_link' : self.base_url+(job.header.h2.a).get('href'),
+                    'job_by' : (job.find('a', 'gtmJobListingPostedBy')).text.strip(),
+                    # when multiple elements share the same attributes and naming convention, we can use indexing to get a particular one
+                    'job_location' : (job.find_all('li', class_='job-card_jobMetadata__item___QNud list-group-item'))[1].text.strip()
+                }
+                self.job_list.append(job_dict)
+            return self.job_list
+        except Exception:
+            return Exception
