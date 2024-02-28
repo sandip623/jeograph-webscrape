@@ -11,7 +11,7 @@ class AddJobToList:
         self.job_list = []
         for job in self.jobs:
             job_dict = {
-                'job_title' : (job.card.header.h2.a).get('title')
+                'job_title' : (job.header.h2.a).get('title')
             }
             self.job_list.append(job_dict)
         return self.job_list
@@ -29,5 +29,10 @@ cards = soup.find_all('div', 'col-sm-12 col-md-7 col-lg-8 col-xl-9')
 obj = AddJobToList(cards)
 
 job_titles = obj.getJobList()
+
+print(job_titles)
+
+del obj
+del job_titles
 
 print(job_titles)

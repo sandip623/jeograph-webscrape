@@ -1,7 +1,9 @@
 from bs4 import BeautifulSoup
 import requests 
 
-url = "https://www.reed.co.uk/jobs/Data-Scientist"
+keyword = "Data-Scientist"
+base_url = f"https://www.reed.co.uk"
+url = f"https://www.reed.co.uk/jobs/{keyword.replace(' ', '-')}"
 
 response = requests.get(url) 
 
@@ -22,7 +24,7 @@ job_location = (card.find_all('li', class_='job-card_jobMetadata__item___QNud li
 
 for card in cards:
     job_title = (card.header.h2.a).get('title')
-    job_link = (card.header.h2.a).get('href')
+    job_link = base_url+(card.header.h2.a).get('href')
     job_by = (card.find('a', 'gtmJobListingPostedBy')).text.strip()
     # when multiple elements share the same attributes and naming convention, we can use indexing to get a particular one
     job_location = (card.find_all('li', class_='job-card_jobMetadata__item___QNud list-group-item'))[1].text.strip()
