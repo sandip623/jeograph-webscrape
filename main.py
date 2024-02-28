@@ -2,9 +2,9 @@ from bs4 import BeautifulSoup
 import requests 
 
 keyword = "Data-Scientist"
-base_url = f"https://www.reed.co.uk"
+base_url = "https://www.reed.co.uk"
 url = f"https://www.reed.co.uk/jobs/{keyword.replace(' ', '-')}"
-
+url = f"{base_url}/jobs/{keyword.replace(' ', '-')}"
 response = requests.get(url) 
 
 # parse html content
