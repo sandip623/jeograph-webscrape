@@ -3,7 +3,7 @@ class AddJobToList:
         self.jobs = jobs
         self.base_url = base_url 
 
-    def getJobList(self):
+    def getJobList(self): 
         self.job_list = []
         try:
             for job in self.jobs:

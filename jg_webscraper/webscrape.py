@@ -1,12 +1,12 @@
 import requests
 from bs4 import BeautifulSoup
-from webscrape_extension import AddJobToList
+from .webscrape_extension import AddJobToList
 
 class WebScraper:
     def __init__(self, base_url, keyword):
         self.base_url = str(base_url) 
-        self.key_word = str(keyword)
-        self.url = f"{base_url}/jobs/{keyword.replace(' ', '-')}"
+        self.key_word = str(keyword).replace(' ','-')
+        self.url = f"{base_url}/jobs/{keyword}"
 
     def fetch_html(self):
         try: 
@@ -20,10 +20,10 @@ class WebScraper:
         try:
             html_content = self.fetch_html()
             if html_content:
-                 soup = BeautifulSoup(html_content, 'html-parser')
+                 soup = BeautifulSoup(html_content, 'html.parser')
                  # get a set of all job cards
                  jobs = soup.find_all('div', 'col-sm-12 col-md-7 col-lg-8 col-xl-9')
-                 job_list = AddJobToList()
-                 
-        except:
-            pass 
+                 job_list = AddJobToList(jobs, self.base_url).getJobList()
+                 return job_list 
+        except Exception:
+            return Exception 
