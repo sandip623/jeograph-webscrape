@@ -2,3 +2,4 @@ project source - https://sandipgurung.atlassian.net/jira/software/projects/KAN/b
 
 based on source reed.co.uk 
 
+azure resource group - dev-jeograph
