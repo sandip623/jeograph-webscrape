@@ -1,10 +1,10 @@
 class StorageAccountConfig:
     def __init__(self):
         self.config = {
-            'account_name' : 'abc123',
-            'account_key' : 'abc123',
-            'container_name' : 'abc123',
-            'blob_name' : 'abc123.json'
+            'account_name' : '<overwrite>',
+            'account_key' : '<overwrite>',
+            'container_name' : '<overwrite>',
+            'blob_name' : '<overwrite>.json'
         }   
     
     def get_config(self):
