@@ -1,2 +1,7 @@
 /venv
+venv/
 /__pycache__
+__pycache__/
+/azure_bindings/az_blb_config.py
+/jg_webscraper/__pycache__
+/jg_webscraper/__pycache__/
