@@ -1,48 +1,40 @@
 import asyncio
 import json 
+import datetime 
 from jg_webscraper import WebScraper, webscrape_extension
 from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
 from azure_bindings import StorageAccountConfig
 
-"""
-keyword = "Pharmacist"
-base_url = "https://www.reed.co.uk"
-listings = WebScraper(base_url=base_url, keyword=keyword).scrape_jobs()
-# convert to json str obj for data ingestion
-listings_dto = json.dumps(listings)
-# get azure config
-config_instance = StorageAccountConfig()
-config = config_instance.get_config()
-# Authenticate to Azure Storage
-blob_service_client = BlobServiceClient(account_url=f"https://{config['account_name']}.blob.core.windows.net", credential=config['account_key'])
-# Get the container client
-container_client = blob_service_client.get_container_client(config['container_name'])
-# Create a blob client and upload JSON data
-blob_client = container_client.get_blob_client(blob=config['blob_name'])
-blob_client.upload_blob(listings_dto, overwrite=True)
-print(f"listings_dto obj uploaded to Azure Blob Storage: {config['blob_name']}")
-"""
+def calculate_target_time_offset(hour, minute):
+    now = datetime.datetime.now()
+    target_time_today = datetime.datetime(now.year, now.month, now.day, hour, minute)
+    if now >= target_time_today:
+        target_time_tomorrow = target_time_today + datetime.timedelta(days=1)
+        return (target_time_tomorrow - now).total_seconds()
+    else:
+        return (target_time_today - now).total_seconds()
 
-async def upload_scrape(interval):
-    while True: 
-        keyword = "Pharmacist"
-        base_url = "https://www.reed.co.uk"
-        listings = WebScraper(base_url=base_url, keyword=keyword).scrape_jobs()
-        # convert to json str obj for data ingestion
-        listings_dto = json.dumps(listings)
-        # get azure config
-        config_instance = StorageAccountConfig()
-        config = config_instance.get_config()
-        # Authenticate to Azure Storage
-        blob_service_client = BlobServiceClient(account_url=f"https://{config['account_name']}.blob.core.windows.net", credential=config['account_key'])
-        # Get the container client
-        container_client = blob_service_client.get_container_client(config['container_name'])
-        # Create a blob client and upload JSON data
-        blob_client = container_client.get_blob_client(blob=config['blob_name'])
-        blob_client.upload_blob(listings_dto, overwrite=True)
-        print(f"listings_dto obj uploaded to Azure Blob Storage: {config['blob_name']}")
-        await asyncio.sleep(interval_seconds)
+def scrape(keyword):
+    base_url = "https://www.reed.co.uk"
+    listings = WebScraper(base_url=base_url, keyword=keyword).scrape_jobs()
+    return json.dumps(listings)
 
-interval_seconds = 30
+def notify():
+    print(f"notify() executed successfully at {datetime.datetime.now()}")
 
-asyncio.run(upload_scrape(interval_seconds))
+async def schedule_blob_task():
+        try:
+            _config = StorageAccountConfig().get_config()
+            _delay = calculate_target_time_offset(17, 00)
+            _blob_service_client = BlobServiceClient(account_url=f"https://{_config['account_name']}.blob.core.windows.net", credential=_config['account_key'])
+            _container_client = _blob_service_client.get_container_client(_config['container_name'])
+            _blob_client = _container_client.get_blob_client(blob=_config['blob_name'])
+            while True:
+                await asyncio.sleep(_delay)
+                _listings = scrape("Data Scientist")
+                _blob_client.upload_blob(_listings, overwrite=True)
+                notify()
+        except Exception:
+            return f"Something went wrong at schedule_blob_task() : {Exception}"
+
+asyncio.run(schedule_blob_task())

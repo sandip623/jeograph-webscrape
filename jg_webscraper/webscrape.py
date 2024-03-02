@@ -14,7 +14,7 @@ class WebScraper:
             if (response.status_code == 200):
                 return response.text
         except Exception:
-            return Exception
+            return f'Something went wrong WebScraper.fetch_html: {Exception}'
     
     def scrape_jobs(self):
         try:
@@ -26,4 +26,4 @@ class WebScraper:
                  job_list = AddJobToList(jobs, self.base_url).getJobList()
                  return job_list 
         except Exception:
-            return Exception 
+            return f'Something went wrong WebScraper.scrape_jobs: {Exception}'
