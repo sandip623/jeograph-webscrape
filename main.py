@@ -4,23 +4,12 @@ import datetime
 from jg_webscraper import WebScraper, webscrape_extension
 from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
 from azure_bindings import StorageAccountConfig
-
-def calculate_target_time_offset(hour, minute):
-    now = datetime.datetime.now()
-    target_time_today = datetime.datetime(now.year, now.month, now.day, hour, minute)
-    if now >= target_time_today:
-        target_time_tomorrow = target_time_today + datetime.timedelta(days=1)
-        return (target_time_tomorrow - now).total_seconds()
-    else:
-        return (target_time_today - now).total_seconds()
+from extension_functions import calculate_target_time_offset, notify
 
 def scrape(keyword):
     base_url = "https://www.reed.co.uk"
     listings = WebScraper(base_url=base_url, keyword=keyword).scrape_jobs()
     return json.dumps(listings)
-
-def notify():
-    print(f"notify() executed successfully at {datetime.datetime.now()}")
 
 async def schedule_blob_task():
         try:
