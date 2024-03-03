@@ -1,15 +1,15 @@
 import asyncio
 import json 
-import datetime 
-from jg_webscraper import WebScraper, webscrape_extension
-from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
+from jg_webscraper import WebScraper
+from azure.storage.blob import BlobServiceClient
 from azure_bindings import StorageAccountConfig
-from extension_functions import calculate_target_time_offset, notify
+from extension_functions import calculate_target_time_offset, notify, LatLong
+from gcp_bindings import ApiServiceKeys
 
 def scrape(keyword):
     base_url = "https://www.reed.co.uk"
     listings = WebScraper(base_url=base_url, keyword=keyword).scrape_jobs()
-    return json.dumps(listings)
+    return listings
 
 async def schedule_blob_task():
         try:
@@ -20,7 +20,7 @@ async def schedule_blob_task():
             _blob_client = _container_client.get_blob_client(blob=_config['blob_name'])
             while True:
                 await asyncio.sleep(_delay)
-                _listings = scrape("Data Scientist")
+                _listings = json.dumps(LatLong(scrape("Data Scientist"), ApiServiceKeys().get_service_key()['googlemaps']).get_latlng())
                 _blob_client.upload_blob(_listings, overwrite=True)
                 notify()
         except Exception:

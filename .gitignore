@@ -7,3 +7,4 @@ __pycache__/
 /jg_webscraper/__pycache__/
 /raw.py
 raw.py 
+/gcp_bindings/gcp_creds.py

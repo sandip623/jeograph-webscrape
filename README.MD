@@ -7,3 +7,4 @@ based on source reed.co.uk
 azure resource group - dev-jeograph
 
 microservice architecture (autonomous scheduling, processing, UI)
+
