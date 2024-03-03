@@ -8,3 +8,4 @@ based on source reed.co.uk
 
 azure resource group - dev-jeograph
 
+data transformation in azure sql
