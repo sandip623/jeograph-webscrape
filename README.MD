@@ -8,4 +8,7 @@ based on source reed.co.uk
 
 azure resource group - dev-jeograph
 
-data transformation in azure sql
+blob storage -> azure data factory (copy, source, sink, schema, debug) -> azure sql db
+serverName - jeographsqlserverauth.database.windows.net
+db - jeographserverauthdb
+schema - jeographserverauthsink
