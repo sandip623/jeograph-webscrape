@@ -12,3 +12,5 @@ blob storage -> azure data factory (copy, source, sink, schema, debug) -> azure 
 serverName - jeographsqlserverauth.database.windows.net
 db - jeographserverauthdb
 schema - jeographserverauthsink
+
+data factory config repo (private) - https://github.com/sandip623/jeograph-datafactory
