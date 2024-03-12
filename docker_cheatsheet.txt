@@ -15,5 +15,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Command to run the Python application
 CMD ["python", "main.py"]
 
-// command to build the Docker image
+// command to build the Docker image (re-build similarly when updates to codebase)
 docker build -t jeograph-webscraper . 
+
+// run a Docker container based on the built image
+docker run my-webscraper
