@@ -1,0 +1,19 @@
+// Dockerfile
+# Use the official Python image as a base 
+FROM python:3.9-slim
+
+# Set the working directory in the container to the root directory
+WORKDIR /
+
+# Copy the Python application code into the container
+COPY . .
+
+# Install dependencies (if any)
+# You can adjust this based on your specific requirements
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Command to run the Python application
+CMD ["python", "main.py"]
+
+// command to build the Docker image
+docker build -t jeograph-webscraper . 

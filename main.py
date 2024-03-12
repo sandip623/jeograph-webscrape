@@ -19,11 +19,12 @@ async def schedule_blob_task():
             _container_client = _blob_service_client.get_container_client(_config['container_name'])
             _blob_client = _container_client.get_blob_client(blob=_config['blob_name'])
             while True:
-                await asyncio.sleep(_delay)
+                await asyncio.sleep(5)
                 _listings = json.dumps(LatLong(scrape("Data Scientist"), ApiServiceKeys().get_service_key()['googlemaps']).get_latlng())
                 _blob_client.upload_blob(_listings, overwrite=True)
                 notify()
         except Exception:
             return f"Something went wrong at schedule_blob_task() : {Exception}"
-
-asyncio.run(schedule_blob_task())
+        
+if __name__ == '__main__':
+    asyncio.run(schedule_blob_task())
