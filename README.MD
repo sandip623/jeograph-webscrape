@@ -1,6 +1,8 @@
 # nb : all azure resources have been deleted to stop charges incurring
 # nb : related microservices have been built with reproducability in mind (so only requires slight config tweaks and a cloud re-setup for a full restart)
 
+![alt text](jeograph data ingestion + integration pipeline flow.jpeg)
+
 microservice to the webapp (add Dockerfile)
 
 pip install -r requirements.txt
