@@ -19,3 +19,7 @@ db - jeographserverauthdb
 schema - jeographserverauthsink
 
 data factory config repo (private) - https://github.com/sandip623/jeograph-datafactory
+
+# objectives
+- visually informative approach via mapping job search query results immediately
+- leveraging the use of cloud platform to automate data integration and app deployment cost-effectively
