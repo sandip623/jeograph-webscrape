@@ -1,10 +1,17 @@
-# nb : all azure resources have been deleted to stop charges incurring
-# nb : related microservices have been built with reproducability in mind (so only requires slight config tweaks and a cloud re-setup for a full restart)
+- nb : all azure resources have been deleted to stop charges incurring
+- nb : related microservices have been built with reproducability in mind (so only requires slight config tweaks and a cloud re-setup for a full restart)
 
 ![Alt text](jeo%20webscrape%20ingestion%20pipeline.jpeg)
 
-microservice to the webapp (add Dockerfile)
+- the above flow diagram depicts how the raw data is to be ingested and processed within the system, including integration via the cloud for further servicing...
 
+- note: this is a microservice delegate to the microservice webmap app (see https://github.com/sandip623/jeograph-webmap) 
+
+
+----------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
+additional developer notes (can be ignored by readers):
 pip install -r requirements.txt
 
 project source - https://sandipgurung.atlassian.net/jira/software/projects/KAN/boards/1
